@@ -1,0 +1,8 @@
+# Python packages used to build QTL-seq GUI ver. 1.02 (Python 3.12.1, macOS)
+pandas==2.2.2
+numpy==2.1.0
+matplotlib==3.9.2
+tkinterdnd2==0.4.3
+
+# Needed only to build the .app
+pyinstaller==6.10.0

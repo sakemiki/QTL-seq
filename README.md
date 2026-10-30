@@ -1,0 +1,222 @@
+# QTL-seq GUI ver. 1.02
+
+QTL-seq GUI is an application for QTL-seq analysis from BAM files. It is available for macOS, Windows (WSL), and Linux. A command-line (CUI) version is also included.
+
+This repository contains:
+
+| Item | Location |
+| --- | --- |
+| macOS application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_mac.zip` |
+| Windows (WSL) / Linux application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_linux` |
+| CUI version | `Run.sh` + `src/` |
+| Source code | `src/` |
+| Test data | `test_data/` |
+| User manual | `QTL-seq_GUI_Manuel.pdf` |
+
+## Contents
+
+- [Requirements](#requirements)
+- [macOS](#macos)
+- [Windows (WSL) / Linux](#windows-wsl--linux)
+- [CUI version](#cui-version)
+- [Test data](#test-data)
+- [Source code](#source-code)
+- [Usage and contact](#usage-and-contact)
+
+---
+
+## Requirements
+
+All versions require [SAMtools](http://www.htslib.org/download/) and [BCFtools](http://www.htslib.org/download/). Their paths are entered in the GUI (or in `Run.sh` for the CUI version).
+
+| Version | Additional requirements |
+| --- | --- |
+| macOS | None (Python is bundled in the application) |
+| Windows (WSL) / Linux | Windows 10 (21H2 or later) or Windows 11 with WSL 2, or a 64-bit Linux PC; Python 3 |
+| CUI / running from source | Python 3.12 and the packages in `requirements.txt` |
+
+---
+
+## macOS
+
+1. Download **[QTL-seq_GUI_ver1_02_mac.zip](https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_mac.zip)**.
+2. Double-click the ZIP file to extract it.
+3. Move `QTL-seq_GUI_ver1_02.app` to any folder you like (e.g., **Applications**).
+4. Double-click `QTL-seq_GUI_ver1_02.app` to start it.
+
+> [!NOTE]
+> **If macOS blocks the app** ("the developer cannot be verified" or "the app is damaged"):
+>
+> - Go to **System Settings → Privacy & Security**, find the message about `QTL-seq_GUI_ver1_02`, and click **Open Anyway**.
+> - If that does not work, run the following in **Terminal** in the folder containing the app, then open it again:
+>
+>   ```bash
+>   xattr -cr QTL-seq_GUI_ver1_02.app
+>   ```
+
+---
+
+## Windows (WSL) / Linux
+
+On Windows, the application runs on **WSL (Windows Subsystem for Linux)**. It can also be used directly on a Linux PC.
+
+### Setup (Windows only)
+
+Skip this section if you are using a Linux PC.
+
+1. Open **PowerShell** as administrator and run the following command, then restart your PC:
+
+   ```powershell
+   wsl --install
+   ```
+
+2. Open **Ubuntu** from the Start menu and set a user name and password when prompted.
+3. In Ubuntu, install the required tools:
+
+   ```bash
+   sudo apt update
+   sudo apt install samtools bcftools python3 wget
+   ```
+
+### Download and launch
+
+Run the following commands in **Ubuntu** (or a terminal on Linux):
+
+```bash
+wget https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_linux
+chmod +x QTL-seq_GUI_ver1_02_linux
+./QTL-seq_GUI_ver1_02_linux
+```
+
+The GUI window will open on your desktop. From the second time on, only the last line (in the same folder) is needed.
+
+> [!NOTE]
+> **To use files stored on Windows**, specify them with paths under `/mnt/`.
+> For example, `C:\Users\yourname\Desktop\sample.bam` becomes `/mnt/c/Users/yourname/Desktop/sample.bam`.
+>
+> **To find the paths of SAMtools and BCFtools** for the input fields, run `which samtools` and `which bcftools`.
+
+---
+
+## CUI version
+
+The command-line version runs the same analysis without a graphical interface, which is useful on servers or for batch processing. It uses the same scripts in `src/` as the GUI and produces the same output.
+
+1. Download this repository and install the required Python packages:
+
+   ```bash
+   git clone https://github.com/sakemiki/QTL-seq.git
+   cd QTL-seq
+   pip3 install -r requirements.txt
+   ```
+
+2. Open `Run.sh` in a text editor and edit the settings at the top (output folder, tool paths, FASTA file, BAM files, and parameters).
+3. Run the analysis:
+
+   ```bash
+   bash Run.sh
+   ```
+
+Settings can also be overridden from the command line without editing the file:
+
+```bash
+bash Run.sh --output /path/to/output --window-size 1000000
+```
+
+> [!NOTE]
+> Each BAM file must be sorted and have a corresponding `.bam.bai` index file in the same folder.
+> The output folder must be different from the folder containing `Run.sh` and from `src/`.
+> To see all available options, run `bash Run.sh --help`.
+
+| Setting in `Run.sh` | Option | Description |
+|---|---|---|
+| `OUTPUT_FOLDER` | `--output` | Output folder |
+| `SAMTOOLS` / `BCFTOOLS` | `--samtools` / `--bcftools` | Paths to SAMtools and BCFtools |
+| `FASTA` | `--fasta` | Reference genome (FASTA) |
+| `PATTERN` | `--pattern` | Parent pattern: `P1` / `P1P2` / `P1F1` / `P1P2F1` |
+| `BULK` | `--bulk` | `single` / `double` |
+| `BULK_TYPE` | `--bulk-type` | Population type: `RIL` / `F2` / `BC1F1` |
+| `P1_BAM`, `P2_BAM`, `F1_BAM`, `ABULK_BAM`, `BBULK_BAM` | `--p1-bam` etc. | BAM files (unused ones are ignored) |
+| `P1_NAME` … `BBULK_NAME` | `--p1-name` etc. | Sample names (must be unique) |
+| `FILTER_DEPTH` | `--filter-depth` | Minimum depth for SNP filtering (default: 10) |
+| `WINDOW_SIZE` / `STEP_SIZE` | `--window-size` / `--step-size` | Sliding window size and step (bp) |
+| `BULK_NUMBER` | `--bulk-number` | Number of individuals per bulk (if different, the smaller value) |
+| `REMOVAL_SNPINDEX` | `--removal-snpindex` | SNPs below this SNP-index in both bulks are removed |
+| `ABULK_COLOR` / `BBULK_COLOR` / `DELTA_COLOR` | `--abulk-color` etc. | Plot colors (matplotlib color names; see `src/color.txt`) |
+| `NUMBER_OF_ROW` | `--side` | Number of columns used to arrange the plots |
+
+---
+
+## Test data
+
+`test_data/` contains a small dataset for checking that the software works.
+
+| File | Description |
+| --- | --- |
+| `test_refarence.fasta`, `test_refarence.fasta.fai` | Reference sequence (3 chromosomes) and its index |
+| `P1.sort.bam`, `P2.sort.bam`, `F1.sort.bam` | Parent 1, parent 2, and F1 |
+| `Abulk.sort.bam`, `Bbulk.sort.bam` | Bulk A and bulk B |
+| `*.bam.bai` | BAM index files |
+
+To try it, select these files in the GUI (or set them in `Run.sh`) with pattern `P1P2F1` or `P1P2`, bulk `double`, and population type `F2`. With the CUI version, for example:
+
+```bash
+bash Run.sh --output ~/qtlseq_test_output \
+    --samtools "$(which samtools)" --bcftools "$(which bcftools)" \
+    --fasta test_data/test_refarence.fasta \
+    --p1-bam test_data/P1.sort.bam --p2-bam test_data/P2.sort.bam \
+    --f1-bam test_data/F1.sort.bam \
+    --abulk-bam test_data/Abulk.sort.bam --bbulk-bam test_data/Bbulk.sort.bam
+```
+
+Plots are written to `result/` and tables (SNP-index, confidence intervals, peak regions) to `txt/` in the output folder.
+
+---
+
+## Source code
+
+The source code corresponding to QTL-seq GUI ver. 1.02 is in `src/`. The distributed macOS and Windows (WSL) / Linux applications were built from these files.
+
+| File(s) | Description |
+| --- | --- |
+| `Run.py` | Main program of the GUI version. Start the GUI from this file. |
+| `Run_CUI.py` | Main program of the CUI version (called from `Run.sh`). |
+| `P_*.py`, `PP_*.py`, `PF_*.py`, `PPF_*.py` | Analysis modules for each parental/F1 sample combination (BAM splitting, VCF generation, SNP-index calculation, confidence intervals, peak detection, plotting). Files containing `singele` are used for single-bulk analysis. |
+| `bam_*.py`, `make_vcf*.py`, `average*.py`, `confidence_interval.py`, `peak.py`, `plot.py`, `snp_sim.py`, `figure_legend*.py`, `move.py`, `Run_*.py` | Shared analysis and helper modules. |
+| `F1_sim.txt`, `F2_*_sim.txt`, `BC1F1_*_sim.txt`, `RIL_*_sim.txt` | Simulated SNP-index tables used to calculate confidence intervals for each population type (F2, BC1F1, RIL) and bulk size (10–50 individuals). |
+| `color.txt` | List of color names available for plots. |
+| `QTL-seq_GUI_ver1_02.spec`, `build.sh`, `QTL_seq_GUI.icns` | PyInstaller build files and application icon. |
+
+### Running the GUI from source
+
+```bash
+pip3 install -r requirements.txt
+cd src
+python3 Run.py
+```
+
+### Building the application
+
+The applications were built with Python 3.12 and PyInstaller 6.10.0. The macOS version was built on macOS 15 (Apple silicon), and the Linux version on 64-bit Linux (x86-64).
+
+```bash
+pip3 install -r requirements.txt
+cd src
+bash build.sh
+```
+
+The built application is written to `src/dist/`.
+`build.sh` and `QTL-seq_GUI_ver1_02.spec` refer to the `tkinterdnd2` package at
+`/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/tkinterdnd2`.
+If your Python is installed elsewhere, change this path to the location shown by:
+
+```bash
+python3 -c "import tkinterdnd2, os; print(os.path.dirname(tkinterdnd2.__file__))"
+```
+
+---
+
+## Usage and contact
+
+See **`QTL-seq_GUI_Manuel.pdf`** for how to use the tool and for details on the settings and output files.
+For bug reports or requests, please use [Issues](https://github.com/sakemiki/QTL-seq/issues) or submit a Pull Request.
