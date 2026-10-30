@@ -11,7 +11,7 @@ This repository contains:
 | CUI version | `Run.sh` + `src/` |
 | Source code | `src/` |
 | Test data | `test_data/` |
-| User manual | `QTL-seq_GUI_Manuel.pdf` |
+| User manual | `QTL-seq_GUI_Manual.pdf` |
 
 ## Contents
 
@@ -218,5 +218,5 @@ python3 -c "import tkinterdnd2, os; print(os.path.dirname(tkinterdnd2.__file__))
 
 ## Usage and contact
 
-See **`QTL-seq_GUI_Manuel.pdf`** for how to use the tool and for details on the settings and output files.
+See **`QTL-seq_GUI_Manual.pdf`** for how to use the tool and for details on the settings and output files.
 For bug reports or requests, please use [Issues](https://github.com/sakemiki/QTL-seq/issues) or submit a Pull Request.
