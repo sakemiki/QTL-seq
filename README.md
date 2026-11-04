@@ -1,13 +1,13 @@
 # QTL-seq GUI ver. 1.02
 
-QTL-seq GUI is an application for QTL-seq analysis from BAM files. It is available for macOS, Windows (WSL), and Linux. A command-line (CUI) version is also included.
+QTL-seq GUI is an application for QTL-seq analysis from BAM files. It is available for macOS and Windows (WSL). A command-line (CUI) version is also included.
 
 This repository contains:
 
 | Item | Location |
 | --- | --- |
 | macOS application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_mac.zip` |
-| Windows (WSL) / Linux application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_linux` |
+| Windows (WSL) application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_windows` |
 | CUI version | `Run.sh` + `src/` |
 | Source code | `src/` |
 | Test data | `test_data/` |
@@ -17,7 +17,7 @@ This repository contains:
 
 - [Requirements](#requirements)
 - [macOS](#macos)
-- [Windows (WSL) / Linux](#windows-wsl--linux)
+- [Windows (WSL)](#windows-wsl)
 - [CUI version](#cui-version)
 - [Test data](#test-data)
 - [Source code](#source-code)
@@ -32,7 +32,7 @@ All versions require [SAMtools](http://www.htslib.org/download/) and [BCFtools](
 | Version | Additional requirements |
 | --- | --- |
 | macOS | None (Python is bundled in the application) |
-| Windows (WSL) / Linux | Windows 10 (21H2 or later) or Windows 11 with WSL 2, or a 64-bit Linux PC; Python 3 |
+| Windows (WSL) | Windows 10 (21H2 or later) or Windows 11 with WSL 2; Python 3 |
 | CUI / running from source | Python 3.12 and the packages in `requirements.txt` |
 
 ---
@@ -56,13 +56,11 @@ All versions require [SAMtools](http://www.htslib.org/download/) and [BCFtools](
 
 ---
 
-## Windows (WSL) / Linux
+## Windows (WSL)
 
-On Windows, the application runs on **WSL (Windows Subsystem for Linux)**. It can also be used directly on a Linux PC.
+On Windows, the application runs on **WSL**, a feature built into Windows.
 
-### Setup (Windows only)
-
-Skip this section if you are using a Linux PC.
+### Setup
 
 1. Open **PowerShell** as administrator and run the following command, then restart your PC:
 
@@ -80,12 +78,12 @@ Skip this section if you are using a Linux PC.
 
 ### Download and launch
 
-Run the following commands in **Ubuntu** (or a terminal on Linux):
+Run the following commands in **Ubuntu**:
 
 ```bash
-wget https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_linux
-chmod +x QTL-seq_GUI_ver1_02_linux
-./QTL-seq_GUI_ver1_02_linux
+wget https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_windows
+chmod +x QTL-seq_GUI_ver1_02_windows
+./QTL-seq_GUI_ver1_02_windows
 ```
 
 The GUI window will open on your desktop. From the second time on, only the last line (in the same folder) is needed.
@@ -100,7 +98,7 @@ The GUI window will open on your desktop. From the second time on, only the last
 
 ## CUI version
 
-The command-line version runs the same analysis without a graphical interface, which is useful on servers or for batch processing. It uses the same scripts in `src/` as the GUI and produces the same output.
+The command-line version runs the same analysis without a graphical interface, which is useful on servers or for batch processing. On Linux, please use this version. It uses the same scripts in `src/` as the GUI and produces the same output.
 
 1. Download this repository and install the required Python packages:
 
@@ -175,7 +173,7 @@ Plots are written to `result/` and tables (SNP-index, confidence intervals, peak
 
 ## Source code
 
-The source code corresponding to QTL-seq GUI ver. 1.02 is in `src/`. The distributed macOS and Windows (WSL) / Linux applications were built from these files.
+The source code corresponding to QTL-seq GUI ver. 1.02 is in `src/`. The distributed macOS and Windows (WSL) applications were built from these files.
 
 | File(s) | Description |
 | --- | --- |
@@ -197,7 +195,7 @@ python3 Run.py
 
 ### Building the application
 
-The applications were built with Python 3.12 and PyInstaller 6.10.0. The macOS version was built on macOS 15 (Apple silicon), and the Linux version on 64-bit Linux (x86-64).
+The applications were built with Python 3.12 and PyInstaller 6.10.0. The macOS version was built on macOS 15 (Apple silicon), and the Windows (WSL) version in a 64-bit Linux environment (x86-64).
 
 ```bash
 pip3 install -r requirements.txt
