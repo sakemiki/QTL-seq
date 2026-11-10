@@ -7,9 +7,9 @@ This repository contains:
 | Item | Location |
 | --- | --- |
 | macOS application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_mac.zip` |
-| Windows (WSL) application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_windows` |
+| Windows (WSL) application | [Releases](https://github.com/sakemiki/QTL-seq/releases/latest) → `QTL-seq_GUI_ver1_02_windows.zip` |
 | CUI version | `Run.sh` + `src/` |
-| Source code | `src/` |
+| Source code | `src/` (Windows launcher and installer: `windows/`) |
 | Test data | `test_data/` |
 | User manual | `QTL-seq_GUI_Manual.pdf` |
 
@@ -32,7 +32,7 @@ All versions require [SAMtools](http://www.htslib.org/download/) and [BCFtools](
 | Version | Additional requirements |
 | --- | --- |
 | macOS | None (Python is bundled in the application) |
-| Windows (WSL) | Windows 10 (21H2 or later) or Windows 11 with WSL 2; Python 3 |
+| Windows (WSL) | Windows 10 (21H2 or later) or Windows 11 with WSL 2 and Ubuntu (SAMtools and BCFtools are installed by `install.sh`) |
 | CUI / running from source | Python 3.12 and the packages in `requirements.txt` |
 
 ---
@@ -58,9 +58,19 @@ All versions require [SAMtools](http://www.htslib.org/download/) and [BCFtools](
 
 ## Windows (WSL)
 
-On Windows, the application runs on **WSL**, a feature built into Windows.
+On Windows, QTL-seq GUI runs on **WSL**, a feature built into Windows. WSL is required because SAMtools and BCFtools are not distributed as Windows applications. After installation, the application is started by double-clicking `QTL-seq_GUI.exe`.
 
-### Setup
+`QTL-seq_GUI_ver1_02_windows.zip` contains:
+
+| File | Description |
+| --- | --- |
+| `QTL-seq_GUI.exe` | Launcher. Double-click to start QTL-seq GUI. |
+| `QTL-seq_GUI.vbs` | Alternative launcher (use only if the `.exe` is blocked). |
+| `QTL-seq_GUI_ver1_02_windows` | QTL-seq GUI application (runs in WSL). |
+| `install.sh` | Installer (installs SAMtools, BCFtools and QTL-seq GUI in WSL). |
+| `README.md` | Instructions for the Windows version. |
+
+### Step 1. Install WSL
 
 1. Open **PowerShell** as administrator and run the following command, then restart your PC:
 
@@ -68,31 +78,42 @@ On Windows, the application runs on **WSL**, a feature built into Windows.
    wsl --install
    ```
 
-2. Open **Ubuntu** from the Start menu and set a user name and password when prompted.
-3. In Ubuntu, install the required tools:
+   If WSL is already installed, run `wsl --update` instead.
+
+2. After restarting, **Ubuntu** opens automatically (or open it from the Start menu). Set a user name and password when prompted.
+
+### Step 2. Install QTL-seq GUI
+
+1. Download **[QTL-seq_GUI_ver1_02_windows.zip](https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_windows.zip)**.
+2. Before extracting the ZIP file, right-click it, select **Properties**, check **Unblock** at the bottom of the dialog, and click **OK**.
+3. Extract the ZIP file (for example, to the Downloads folder).
+4. Open **Ubuntu**, move to the extracted folder and run `install.sh`. Enter your Ubuntu password when asked. For example, if the folder was extracted to `C:\Users\<YourName>\Downloads\QTL-seq_GUI_ver1_02_windows`:
 
    ```bash
-   sudo apt update
-   sudo apt install samtools bcftools python3 wget
+   cd /mnt/c/Users/<YourName>/Downloads/QTL-seq_GUI_ver1_02_windows
+   bash install.sh
    ```
 
-### Download and launch
+### Step 3. Launch
 
-Run the following commands in **Ubuntu**:
-
-```bash
-wget https://github.com/sakemiki/QTL-seq/releases/latest/download/QTL-seq_GUI_ver1_02_windows
-chmod +x QTL-seq_GUI_ver1_02_windows
-./QTL-seq_GUI_ver1_02_windows
-```
-
-The GUI window will open on your desktop. From the second time on, only the last line (in the same folder) is needed.
+Double-click `QTL-seq_GUI.exe`. The launcher can be placed anywhere (for example, on the Desktop).
 
 > [!NOTE]
-> **To use files stored on Windows**, specify them with paths under `/mnt/`.
-> For example, `C:\Users\yourname\Desktop\sample.bam` becomes `/mnt/c/Users/yourname/Desktop/sample.bam`.
->
-> **To find the paths of SAMtools and BCFtools** for the input fields, run `which samtools` and `which bcftools`.
+> **If Windows shows "Windows protected your PC"** (the launcher is not digitally signed), click **More info** and then **Run anyway**.
+> If `QTL-seq_GUI.exe` is blocked by the security policy of your organization, double-click `QTL-seq_GUI.vbs` instead.
+
+### Specifying file paths
+
+QTL-seq GUI runs inside WSL, so file paths are written in the Linux format. Files on the Windows drive `C:\` are under `/mnt/c/`. Files can also be selected with the **Browse** buttons.
+
+| Item | Example |
+| --- | --- |
+| SAMtools | `/usr/bin/samtools` |
+| BCFtools | `/usr/bin/bcftools` |
+| BAM file (`C:\Users\<YourName>\Desktop\P1.bam`) | `/mnt/c/Users/<YourName>/Desktop/P1.bam` |
+| Output folder (`C:\Users\<YourName>\Desktop`) | `/mnt/c/Users/<YourName>/Desktop` |
+
+To uninstall, delete `QTL-seq_GUI.exe` and the extracted folder, and run `rm -r ~/QTLseqGUI` in Ubuntu.
 
 ---
 
@@ -173,7 +194,7 @@ Plots are written to `result/` and tables (SNP-index, confidence intervals, peak
 
 ## Source code
 
-The source code corresponding to QTL-seq GUI ver. 1.02 is in `src/`. The distributed macOS and Windows (WSL) applications were built from these files.
+The source code corresponding to QTL-seq GUI ver. 1.02 is in `src/`. The distributed macOS and Windows (WSL) applications were built from these files. The Windows launcher, installer and build script are in `windows/`.
 
 | File(s) | Description |
 | --- | --- |
@@ -193,9 +214,9 @@ cd src
 python3 Run.py
 ```
 
-### Building the application
+### Building the macOS application
 
-The applications were built with Python 3.12 and PyInstaller 6.10.0. The macOS version was built on macOS 15 (Apple silicon), and the Windows (WSL) version in a 64-bit Linux environment (x86-64).
+The macOS application was built with Python 3.12 and PyInstaller 6.10.0 on macOS 15 (Apple silicon).
 
 ```bash
 pip3 install -r requirements.txt
@@ -210,6 +231,32 @@ If your Python is installed elsewhere, change this path to the location shown by
 
 ```bash
 python3 -c "import tkinterdnd2, os; print(os.path.dirname(tkinterdnd2.__file__))"
+```
+
+### Windows version (`windows/`)
+
+| File | Description |
+| --- | --- |
+| `Run_windows.patch` | Difference between `src/Run.py` and the `Run.py` used for the Windows version. Only the example paths shown in the input fields are changed (e.g., `/Users/XXXXX/Desktop` → `/mnt/c/Users/XXXXX/Desktop`); the analysis is identical. |
+| `build_wsl.sh` | Builds the application (`QTL-seq_GUI_ver1_02_windows`) with Python 3.12 and PyInstaller inside WSL (Ubuntu, x86-64). |
+| `launcher/launcher.py`, `launcher/QTL-seq_GUI.spec`, `launcher/QTL-seq_GUI.ico` | Source, PyInstaller build file and icon of the launcher `QTL-seq_GUI.exe` (built on Windows with Python 3.13). The launcher only starts the application in WSL. |
+| `QTL-seq_GUI.vbs` | Alternative launcher. |
+| `install.sh` | Installer included in the Windows ZIP file. |
+
+To build the Windows application, copy `src/`, apply the patch, and run `build_wsl.sh` in WSL (edit the `SRC` path in the script to the folder containing the files):
+
+```bash
+cp -r src/ QTLseqGUI_windows_build/
+cd QTLseqGUI_windows_build
+patch -p0 Run.py < ../windows/Run_windows.patch
+bash ../windows/build_wsl.sh
+```
+
+To build the launcher, run the following in the Command Prompt on Windows:
+
+```bash
+cd windows\launcher
+pyinstaller QTL-seq_GUI.spec
 ```
 
 ---

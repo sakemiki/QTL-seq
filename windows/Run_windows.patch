@@ -1,0 +1,92 @@
+--- src/Run.py
++++ src/Run.py (Windows)
+@@ -155,7 +155,7 @@
+         self.out_label = tk.Label(self.out_frame, text="Output folder", bg=color1, fg="black", width=11)
+         self.out_label.pack(side="left")
+         self.out_entry = tk.Entry(self.out_frame, fg="black", bg=color0, width=60)  
+-        self.out_entry.insert(0, "/Users/XXXXX/Desktop")
++        self.out_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop")
+         #self.out_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/test")
+         self.out_entry.pack(side="left", fill="x", expand=True, padx=10)  
+         self.out_entry.configure(highlightbackground=color1)
+\ No newline at end of file
+@@ -176,7 +176,7 @@
+         self.samtools_label.pack(side="left")
+         self.samtools_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60) 
+         #self.samtools_entry.insert(0, "/Users/sakemoto/Desktop/tools/samtools-1.20/samtools")
+-        self.samtools_entry.insert(0, "/Users/XXXXX/Desktop/samtools")
++        self.samtools_entry.insert(0, "/usr/bin/samtools")
+         self.samtools_entry.pack(side="left", fill="x", expand=True, padx=10)
+         self.samtools_entry.configure(highlightbackground=color1)
+         self.samtools_button = tk.Button(self.bam_frame, text="Browse", command=self.browse_foldersamtools, fg="black")
+\ No newline at end of file
+@@ -197,7 +197,7 @@
+         self.bcftools_label.pack(side="left")
+         self.bcftools_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+         #self.bcftools_entry.insert(0, "/Users/sakemoto/Desktop/tools/bcftools-1.20/bcftools")
+-        self.bcftools_entry.insert(0, "/Users/XXXXX/Desktop/bcftools")
++        self.bcftools_entry.insert(0, "/usr/bin/bcftools")
+         self.bcftools_entry.pack(side="left", fill="x", expand=True, padx=10)
+         self.bcftools_entry.configure(highlightbackground=color1)
+         self.bcftools_button = tk.Button(self.bam_frame, text="Browse", command=self.browse_folderbcftools, fg="black")
+\ No newline at end of file
+@@ -216,7 +216,7 @@
+         self.fasta_label = tk.Label(self.bam_frame, text="fasta", bg=color1, fg="black", width=11)
+         self.fasta_label.pack(side="left")
+         self.fasta_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60) 
+-        self.fasta_entry.insert(0, "/Users/Desktop/XXXXX.fna")
++        self.fasta_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/XXXXX.fna")
+         #self.fasta_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/test_refarence.fasta")
+         self.fasta_entry.pack(side="left", fill="x", expand=True, padx=10)
+         self.fasta_entry.configure(highlightbackground=color1)
+\ No newline at end of file
+@@ -629,7 +629,7 @@
+         self.p1_bam_label = tk.Label(self.bam_frame, text="P1 bam", bg=color1, fg="black", width=11)
+         self.p1_bam_label.pack(side="left")
+         self.p1_bam_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+-        self.p1_bam_entry.insert(0, "/Users/XXXXX/Desktop/P1.bam")
++        self.p1_bam_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/P1.bam")
+         #self.p1_bam_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/P1.sort.bam")
+         #self.p1_bam_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/Mig_seq_bam/Ref_v1/Misuzudaizu_merged.bam")
+         self.p1_bam_entry.pack(side="left", fill="x", expand=True, padx=10)
+\ No newline at end of file
+@@ -652,7 +652,7 @@
+             self.p2_bam_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+             #self.p2_bam_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/Mig_seq_bam/Ref_v1/Moshidou_merged.bam")
+             #self.p2_bam_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/P2.sort.bam")
+-            self.p2_bam_entry.insert(0, "/Users/XXXXX/Desktop/P2.bam")
++            self.p2_bam_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/P2.bam")
+             self.p2_bam_entry.pack(side="left", fill="x", expand=True, padx=10)
+             self.p2_bam_entry.configure(highlightbackground=color1)
+             self.p2_bam_button = tk.Button(self.bam_frame, text="Browse", command=self.browse_folderP2bam, fg="black")
+\ No newline at end of file
+@@ -673,7 +673,7 @@
+             self.f1_bam_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+             #self.f1_bam_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/Mig_seq_bam/Ref_v1/F1.sort.bam")
+             #self.f1_bam_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/F1.sort.bam")
+-            self.f1_bam_entry.insert(0, "/Users/XXXXX/Desktop/F1.bam")
++            self.f1_bam_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/F1.bam")
+             self.f1_bam_entry.pack(side="left", fill="x", expand=True, padx=10)
+             self.f1_bam_entry.configure(highlightbackground=color1)
+             self.p2_bam_button = tk.Button(self.bam_frame, text="Browse", command=self.browse_folderF1bam, fg="black")
+\ No newline at end of file
+@@ -693,7 +693,7 @@
+         self.abulk_bam_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+         #self.abulk_bam_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/Mig_seq_bam/Ref_v1/early_bulk.sort.bam")
+         #self.abulk_bam_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/Abulk.sort.bam")
+-        self.abulk_bam_entry.insert(0, "/Users/XXXXX/Desktop/Abulk.bam")
++        self.abulk_bam_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/Abulk.bam")
+         self.abulk_bam_entry.pack(side="left", fill="x", expand=True, padx=10)
+         self.abulk_bam_entry.configure(highlightbackground=color1)
+         self.p1_bam_button = tk.Button(self.bam_frame, text="Browse", command=self.browse_folderAbam, fg="black")
+\ No newline at end of file
+@@ -712,7 +712,7 @@
+             self.bbulk_bam_label = tk.Label(self.bam_frame, text="Bbulk bam", bg=color1, fg="black", width=11)
+             self.bbulk_bam_label.pack(side="left")
+             self.bbulk_bam_entry = tk.Entry(self.bam_frame, fg='black', bg=color0, width=60)  
+-            self.bbulk_bam_entry.insert(0, "/Users/XXXXX/Desktop/Bbulk.bam")
++            self.bbulk_bam_entry.insert(0, "/mnt/c/Users/XXXXX/Desktop/Bbulk.bam")
+             #self.bbulk_bam_entry.insert(0, "/Volumes/HD-PUSU3-D/sakemoto_data/ronbun_soybean/Mig_seq_bam/Ref_v1/late_bulk.sort.bam")
+             #self.bbulk_bam_entry.insert(0, "/Users/sakemoto/Desktop/alignment/test_data/Bbulk.sort.bam")
+             self.bbulk_bam_entry.pack(side="left", fill="x", expand=True, padx=10)
+\ No newline at end of file
