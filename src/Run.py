@@ -144,7 +144,7 @@ class DetailWindow(tk.Frame):
         self.out_frame = tk.Frame(scrollable_frame, bg=color2)
         self.out_frame.pack(fill="x", padx=20, pady=[10, 0])
 
-        self.path_label = tk.Label(self.out_frame, text="Enter the path to the file", font=("Arial", 20), fg='black', bg=color2)
+        self.path_label = tk.Label(self.out_frame, text="Path settings", font=("Arial", 20), fg='black', bg=color2)
         self.path_label.pack(side="left")
 
         self.out_frame = tk.Frame(scrollable_frame, bg=color1)
@@ -234,7 +234,7 @@ class DetailWindow(tk.Frame):
         self.name = tk.Frame(scrollable_frame, bg=color2)
         self.name.pack(fill="x", padx=20, pady=[10,0])
 
-        self.entry_label = tk.Label(self.name, text="Enter filtering values", font=("Arial", 20), fg='black', bg=color2)
+        self.entry_label = tk.Label(self.name, text="Filtering and sliding-window parameters", font=("Arial", 20), fg='black', bg=color2)
         self.entry_label.pack(side="left")
 
         self.name = tk.Frame(scrollable_frame, bg=color1)
@@ -278,7 +278,7 @@ class DetailWindow(tk.Frame):
         self.name = tk.Frame(scrollable_frame, bg=color2)
         self.name.pack(fill="x", padx=20, pady=[10,0])
 
-        self.entry_label = tk.Label(self.name, text="Graph options", font=("Arial", 20), fg='black', bg=color2)
+        self.entry_label = tk.Label(self.name, text="Graph settings", font=("Arial", 20), fg='black', bg=color2)
         self.entry_label.pack(side="left")
 
         self.name = tk.Frame(scrollable_frame, bg=color1)
@@ -370,7 +370,7 @@ class DetailWindow(tk.Frame):
         self.selection_frame = tk.Frame(scrollable_frame, bg=color2)
         self.selection_frame.pack(fill="x", padx=20, pady=[10,0])
 
-        self.option_label = tk.Label(self.selection_frame, text="Select processing details", font=("Arial", 20), fg='black', bg=color2)
+        self.option_label = tk.Label(self.selection_frame, text="Analysis conditions", font=("Arial", 20), fg='black', bg=color2)
         self.option_label.pack(side="left")
 
         self.selection_frame = tk.Frame(scrollable_frame, bg=color1)
@@ -622,7 +622,7 @@ class BamWindow(tk.Frame):
         # header
         header = tk.Frame(scrollable_frame, bg=color2)
         header.pack(fill="x", padx=20, pady=10)
-        tk.Label(header,text="Enter the path to the file",font=("Arial", 20),bg=color2,fg="black").pack(side="left")
+        tk.Label(header,text="Paths of BAM files",font=("Arial", 20),bg=color2,fg="black").pack(side="left")
         # P1 bam
         self.bam_frame = tk.Frame(scrollable_frame, bg=color1)
         self.bam_frame.pack(fill="x", padx=20, pady=0)
@@ -729,7 +729,7 @@ class BamWindow(tk.Frame):
         # sample name header
         name_title = tk.Frame(scrollable_frame, bg=color2)
         name_title.pack(fill="x", padx=20, pady=[10,0])
-        tk.Label(name_title,text="Enter the name of sample",font=("Arial",20),bg=color2,fg="black").pack(side="left")
+        tk.Label(name_title,text="Names of samples (user-defined)",font=("Arial",20),bg=color2,fg="black").pack(side="left")
         # sample name input
         name_frame = tk.Frame(scrollable_frame, bg=color1)
         name_frame.pack(fill="x", padx=20)
